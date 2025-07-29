@@ -1,3 +1,4 @@
+
 -- Create a new database named Student_db
 CREATE DATABASE Student_db;
 
@@ -93,7 +94,6 @@ SELECT * FROM Students WHERE age > 18;
 
 -- 4. Get details of students enrolled in Class ID = 2
 SELECT * FROM Students WHERE class_id = 2;
-
 -- 5. List all students ordered by age (youngest first)
 SELECT * FROM Students ORDER BY age ASC;
 
@@ -103,6 +103,7 @@ FROM Marks
 WHERE subject = 'Math' 
 ORDER BY marks DESC 
 LIMIT 5;
+
 
 -- 7. Show student names with their respective class names
 SELECT Students.name, Classes.class_name
@@ -155,15 +156,22 @@ WHERE class_id = (
 -- 14. Add a new student record: Ali, age 17, male, in Class 3
 INSERT INTO Students (student_id, name, age, gender, class_id)
 VALUES (8, 'Ali', 17, 'Male', 3);
+SELECT * FROM Students;
 
 -- 15. Update the subject of the teacher with ID = 101 to Computer Science
 UPDATE Teachers
 SET subject = 'Computer Science'
 WHERE teacher_id = 101;
+select *  FROM Teachers;
 
 -- 16. Delete students older than 25 years
+SET SQL_SAFE_UPDATES = 0;
+
 DELETE FROM Students
 WHERE age > 25;
+
+SET SQL_SAFE_UPDATES = 1;
+Select * FROM Students;
 
 -- 17. Get names of students without marks in English
 SELECT name
@@ -191,8 +199,11 @@ GROUP BY s.name
 ORDER BY total_marks DESC;
 
 -- 20. Create a temporary table storing result of Query #8 (Student + Teacher names)
+DROP TEMPORARY TABLE IF EXISTS Temp_Student_Teachers;
+
 CREATE TEMPORARY TABLE Temp_Student_Teachers AS
 SELECT Students.name AS student_name, Teachers.name AS teacher_name
 FROM Students
 JOIN Classes ON Students.class_id = Classes.class_id
 JOIN Teachers ON Classes.teacher_id = Teachers.teacher_id;
+Select * FROM Temp_Student_Teachers;
